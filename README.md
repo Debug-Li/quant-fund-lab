@@ -18,6 +18,18 @@ cd /Users/qml/Desktop/workspace/quant-fund-lab
 uv run quant-lab
 ```
 
+macOS 也可以直接双击项目根目录中的：
+
+```text
+启动量化.command
+```
+
+双击默认启动新版量观 Quant Lab，浏览器入口为 `http://localhost:5173`。旧版 Streamlit、Jupyter、测试和命令行工具仍可通过：
+
+```bash
+./启动量化.command legacy
+```
+
 也可以分别启动：
 
 ```bash
