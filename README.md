@@ -17,7 +17,33 @@ uv run python --version
 uv run jupyter lab
 ```
 
-## 常用命令
+## 图形界面使用方式
+
+项目推荐使用本地浏览器 UI：
+
+```bash
+uv run qfl-ui
+```
+
+或：
+
+```bash
+uv run streamlit run src/quant_fund_lab/ui/streamlit_app.py
+```
+
+启动后在浏览器中使用：
+
+- 数据中心：生成演示数据或下载 AKShare ETF 研究池数据
+- 看盘中心：拉取单标的行情、查看 K 线和技术指标
+- 轮动回测：运行 ETF 动量轮动策略
+- 策略回测：运行轻量单标的策略回测
+- 模拟信号：生成最新一期模拟调仓信号
+- 报告中心：查看和下载报告文件
+- 设置诊断：检查路径、依赖和数据状态
+
+旧命令行入口仍保留给开发调试，但普通用户推荐使用 UI。
+
+## 开发者命令
 
 下载默认 ETF 研究池数据：
 
@@ -71,6 +97,7 @@ macOS 双击快捷启动：
 
 ```bash
 ./启动量化.command jupyter
+./启动量化.command ui
 ./启动量化.command app
 ./启动量化.command test
 ```
@@ -115,3 +142,4 @@ src/quant_fund_lab/       项目代码
 - `tests/`：覆盖指标、数据存储、策略加载、回测撮合和边界价格。
 
 下一步是 PySide6 桌面界面：主看盘页、指标勾选、策略编辑器和回测报告页。
+当前已按新规划优先实现 Streamlit 本地浏览器 UI，PySide6 可作为后续原生桌面方向。

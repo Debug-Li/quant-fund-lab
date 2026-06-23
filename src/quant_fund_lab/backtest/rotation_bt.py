@@ -46,6 +46,22 @@ def run_backtest(prices: pd.DataFrame) -> bt.backtest.Result:
     return bt.run(test)
 
 
+def run_backtest_with_params(
+    prices: pd.DataFrame,
+    lookback_days: int = 60,
+    top_n: int = 3,
+    trend_days: int = 20,
+) -> bt.backtest.Result:
+    strategy = build_strategy(
+        prices=prices,
+        lookback_days=lookback_days,
+        top_n=top_n,
+        trend_days=trend_days,
+    )
+    test = bt.Backtest(strategy, prices)
+    return bt.run(test)
+
+
 def main() -> None:
     prices = load_price_matrix()
     result = run_backtest(prices)
