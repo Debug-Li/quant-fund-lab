@@ -18,6 +18,8 @@ data/raw/*.csv
 data/raw/*.parquet
 data/processed/*.parquet
 data/features/*.parquet
+data/*.duckdb
+data/*.duckdb.*
 reports/*.csv
 reports/*.html
 reports/*.png
