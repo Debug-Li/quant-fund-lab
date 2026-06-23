@@ -22,7 +22,10 @@ def fetch_market_bars_service(
         bars = fetch_save_and_query(symbol, market, start, end, timeframe, csv_path)
         return ServiceResult(True, f"已获取并保存 {symbol} 行情，共 {len(bars)} 行", dataframe=bars, data=bars)
     except Exception as exc:
-        return ServiceResult(False, f"获取行情失败: {exc}", error_detail=repr(exc))
+        message = f"获取行情失败: {exc}"
+        if market in {"a股指数", "akshare_index", "cn_index"}:
+            message += "。A股指数当前依赖 AKShare 的东方财富接口，若网络或代理异常，可先改用对应 ETF 代码继续研究。"
+        return ServiceResult(False, message, error_detail=repr(exc))
 
 
 def add_indicators_service(bars: pd.DataFrame, indicators: list[str]) -> ServiceResult:

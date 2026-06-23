@@ -32,7 +32,7 @@ slippage_rate = col3.number_input("滑点率", min_value=0.0, value=0.0002, step
 
 if source == "已下载行情":
     symbol = st.text_input("Symbol", value="SPY")
-    market = st.selectbox("市场", ["us", "a股", "etf", "index", "crypto"])
+    market = st.selectbox("市场", ["us", "a股股票", "a股ETF", "a股指数", "etf", "index", "crypto"])
     start = st.date_input("开始日期", value=dt.date(2023, 1, 1))
     end = st.date_input("结束日期", value=dt.date.today())
 else:

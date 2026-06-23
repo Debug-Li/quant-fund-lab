@@ -15,10 +15,11 @@ from quant_fund_lab.ui.state import init_page
 
 init_page("看盘中心")
 st.title("看盘中心")
+st.caption("示例：`SPY + us`、`000001 + a股股票`、`510300 + a股ETF`、`000300 + a股指数`")
 
 with st.sidebar:
     symbol = st.text_input("Symbol", value="SPY")
-    market = st.selectbox("市场", ["us", "a股", "etf", "index", "crypto", "csv"])
+    market = st.selectbox("市场", ["us", "a股股票", "a股ETF", "a股指数", "etf", "index", "crypto", "csv"])
     timeframe = st.selectbox("周期", ["1d", "1wk", "1mo"])
     start = st.date_input("开始日期", value=dt.date(2023, 1, 1))
     end = st.date_input("结束日期", value=dt.date.today())

@@ -16,8 +16,12 @@ def provider_for_market(market: str, csv_path: str | Path | None = None) -> Base
     normalized = market.lower()
     if normalized in {"us", "美股", "etf", "crypto", "加密货币", "index", "指数"}:
         return YFinanceProvider()
-    if normalized in {"a", "a股", "cn", "china", "akshare"}:
-        return AKShareProvider()
+    if normalized in {"a", "a股", "cn", "china", "akshare", "a股股票", "akshare_stock", "cn_stock"}:
+        return AKShareProvider(asset_type="stock")
+    if normalized in {"a股etf", "akshare_etf", "cn_etf"}:
+        return AKShareProvider(asset_type="etf")
+    if normalized in {"a股指数", "akshare_index", "cn_index"}:
+        return AKShareProvider(asset_type="index")
     if normalized == "csv":
         if csv_path is None:
             raise DataProviderError("csv_path is required for CSV provider.")
