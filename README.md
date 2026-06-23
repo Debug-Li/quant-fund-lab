@@ -1,11 +1,55 @@
-# Quant Fund Lab
+# 量观 Quant Lab
 
-本项目用于学习和研究指数基金、行业 ETF、行业主题基金的量化策略。默认路线是：
+量观 Quant Lab 是一个本地运行的专业量化研究、看盘、回测、组合管理与风险监控平台。当前主线已经从命令行研究工具升级为 `FastAPI + React + Vite + TypeScript + ECharts` 的本地金融终端。
+
+默认路线是：
 
 ```text
 数据获取 -> 数据落地 -> 策略研究 -> 组合回测 -> 每日/每周模拟信号
 AKShare    Parquet     Pandas      bt         本地信号脚本
 ```
+
+## 启动量观 Quant Lab
+
+一键启动后端和前端：
+
+```bash
+cd /Users/qml/Desktop/workspace/quant-fund-lab
+uv run quant-lab
+```
+
+也可以分别启动：
+
+```bash
+uv run quant-lab-api
+```
+
+```bash
+cd apps/web
+npm install
+npm run dev
+```
+
+打开：
+
+```text
+http://localhost:5173
+```
+
+页面包括：
+
+- 总览
+- 市场看盘
+- 策略研究
+- 回测分析
+- 组合管理
+- 信号中心
+- 数据中心
+- 风险监控
+- 报告中心
+- 设置
+
+所有页面都内置 demo 数据，即使没有真实行情或网络也可以完整渲染。平台不默认接入真实交易下单。
 
 ## 环境
 
@@ -17,9 +61,9 @@ uv run python --version
 uv run jupyter lab
 ```
 
-## 图形界面使用方式
+## Legacy Streamlit UI
 
-项目推荐使用本地浏览器 UI：
+旧版 Streamlit UI 仍保留给开发调试：
 
 ```bash
 uv run qfl-ui
