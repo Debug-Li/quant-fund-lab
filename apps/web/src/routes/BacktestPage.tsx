@@ -6,15 +6,20 @@ import { Panel } from "../components/layout/Panel";
 import { PageHeader } from "../components/shell/PageHeader";
 import { DataTable } from "../components/tables/DataTable";
 import { runBacktest } from "../services/backtestApi";
+import { marketOptions, type ResearchContext } from "../types/research";
 import { LoadingState } from "./LoadingState";
 import { useApiData } from "./useApiData";
 
-export function BacktestPage() {
-  const { data, error, loading } = useApiData(runBacktest);
+export function BacktestPage({ context }: { context: ResearchContext }) {
+  const apiMarket = marketOptions[context.market].apiMarket;
+  const { data, error, loading } = useApiData(
+    () => runBacktest(context.symbol, apiMarket, context.period),
+    [context.symbol, apiMarket, context.period, context.refreshKey]
+  );
   if (!data) return <LoadingState error={error} loading={loading} />;
   return (
     <>
-      <PageHeader title="回测分析" desc="策略参数、净值回撤、寻优热力图、收益分布和交易明细。" />
+      <PageHeader title="回测分析" desc={`当前回测：${context.symbol} · ${marketOptions[context.market].label} · ${context.period}`} />
       <div className="grid cols-3">{data.kpis.slice(0, 6).map((item) => <MetricCard key={item.title} item={item} />)}</div>
       <div className="split-main" style={{ marginTop: 14 }}>
         <div className="grid">

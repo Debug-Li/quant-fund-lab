@@ -9,15 +9,20 @@ import { PageHeader } from "../components/shell/PageHeader";
 import { DataTable } from "../components/tables/DataTable";
 import { SignalTimeline } from "../components/timeline/SignalTimeline";
 import { getMarketSnapshot } from "../services/marketApi";
+import { marketOptions, type ResearchContext } from "../types/research";
 import { LoadingState } from "./LoadingState";
 import { useApiData } from "./useApiData";
 
-export function MarketWatchPage() {
-  const { data, error, loading } = useApiData(() => getMarketSnapshot("NVDA"));
+export function MarketWatchPage({ context }: { context: ResearchContext }) {
+  const apiMarket = marketOptions[context.market].apiMarket;
+  const { data, error, loading } = useApiData(
+    () => getMarketSnapshot(context.symbol, apiMarket, context.period),
+    [context.symbol, apiMarket, context.period, context.refreshKey]
+  );
   if (!data) return <LoadingState error={error} loading={loading} />;
   return (
     <>
-      <PageHeader title="市场看盘" desc="K线、盘口、自选股、板块资金和新闻信号集中看盘。" />
+      <PageHeader title="市场看盘" desc={`当前：${context.symbol} · ${marketOptions[context.market].label} · ${context.period}`} />
       <div className="split-main">
         <div className="grid">
           <Panel title={`${data.symbol} · ${data.name}`} action={<span className={data.changePct >= 0 ? "positive" : "negative"}>{data.price} · {data.changePct}%</span>}>

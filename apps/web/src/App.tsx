@@ -11,17 +11,18 @@ import { RiskMonitorPage } from "./routes/RiskMonitorPage";
 import { SettingsPage } from "./routes/SettingsPage";
 import { SignalCenterPage } from "./routes/SignalCenterPage";
 import { StrategyLabPage } from "./routes/StrategyLabPage";
+import { marketOptions, type MarketScope, type PeriodScope, type ResearchContext } from "./types/research";
 
-function renderPage(page: PageKey) {
+function renderPage(page: PageKey, context: ResearchContext) {
   switch (page) {
     case "dashboard":
       return <DashboardPage />;
     case "market":
-      return <MarketWatchPage />;
+      return <MarketWatchPage context={context} />;
     case "strategy":
       return <StrategyLabPage />;
     case "backtest":
-      return <BacktestPage />;
+      return <BacktestPage context={context} />;
     case "portfolio":
       return <PortfolioPage />;
     case "signal":
@@ -39,9 +40,40 @@ function renderPage(page: PageKey) {
 
 export default function App() {
   const [page, setPage] = useState<PageKey>("dashboard");
+  const [context, setContext] = useState<ResearchContext>({ market: "etf", period: "1d", symbol: "510300", refreshKey: 0 });
+  const updateMarket = (market: MarketScope) => {
+    setContext((current) => ({
+      ...current,
+      market,
+      symbol: marketOptions[market].defaultSymbol,
+      refreshKey: current.refreshKey + 1
+    }));
+    setPage("market");
+  };
+  const updatePeriod = (period: PeriodScope) => {
+    setContext((current) => ({ ...current, period, refreshKey: current.refreshKey + 1 }));
+  };
+  const updateSymbol = (symbol: string) => {
+    setContext((current) => ({ ...current, symbol, refreshKey: current.refreshKey + 1 }));
+    setPage("market");
+  };
+  const refresh = () => setContext((current) => ({ ...current, refreshKey: current.refreshKey + 1 }));
+  const runBacktest = () => {
+    setContext((current) => ({ ...current, refreshKey: current.refreshKey + 1 }));
+    setPage("backtest");
+  };
   return (
-    <AppShell active={page} onChange={setPage}>
-      {renderPage(page)}
+    <AppShell
+      active={page}
+      context={context}
+      onChange={setPage}
+      onMarketChange={updateMarket}
+      onPeriodChange={updatePeriod}
+      onSymbolChange={updateSymbol}
+      onRefresh={refresh}
+      onRunBacktest={runBacktest}
+    >
+      {renderPage(page, context)}
     </AppShell>
   );
 }

@@ -147,6 +147,22 @@ select {
   background: rgba(16, 36, 58, 0.58);
 }
 
+.pill-button {
+  padding: 8px 11px;
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  color: var(--muted);
+  background: rgba(16, 36, 58, 0.58);
+  cursor: pointer;
+}
+
+.pill-button:hover,
+.pill-button.active {
+  color: var(--text);
+  border-color: rgba(22, 119, 255, 0.7);
+  background: linear-gradient(135deg, rgba(22, 119, 255, 0.42), rgba(19, 194, 194, 0.2));
+}
+
 .content {
   padding: 22px;
 }

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { DependencyList, useEffect, useState } from "react";
 
-export function useApiData<T>(loader: () => Promise<T>) {
+export function useApiData<T>(loader: () => Promise<T>, deps: DependencyList = []) {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -24,7 +24,7 @@ export function useApiData<T>(loader: () => Promise<T>) {
     return () => {
       alive = false;
     };
-  }, []);
+  }, deps);
 
   return { data, error, loading };
 }
