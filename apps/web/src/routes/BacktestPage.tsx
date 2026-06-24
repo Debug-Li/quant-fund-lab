@@ -28,7 +28,7 @@ export function BacktestPage() {
         <div className="grid">
           <Panel title="收益分布"><DistributionChart data={data.distribution} /></Panel>
           <Panel title="运行日志"><div className="terminal-list">{data.logs.map((log) => <div className="timeline-item" key={log}><span>step</span><span>{log}</span></div>)}</div></Panel>
-          <Panel title="策略说明"><div className="metric-label">当前为 demo 回测结果。后续将逐步接入本地真实回测引擎、参数寻优和 HTML 报告导出。</div></Panel>
+          <Panel title="策略说明"><div className="metric-label">当前接口已优先接入本地真实行情和 MA Cross 回测引擎；缺少行情或数据源失败时自动回退 demo，页面不会空白。</div></Panel>
         </div>
       </div>
     </>
